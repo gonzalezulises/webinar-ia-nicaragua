@@ -33,11 +33,12 @@
             --gradient-1: linear-gradient(135deg, #00d4aa, #3b82f6);
             --gradient-2: linear-gradient(135deg, #3b82f6, #8b5cf6);
             --gradient-3: linear-gradient(135deg, #f59e0b, #ef4444);
-            --nav-h: 64px;
+            --nav-h: 56px;
+            --sidebar-w: 260px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 24px); }
+        html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
@@ -69,54 +70,98 @@
             66% { transform: translateY(25px) translateX(-20px); }
         }
 
-        /* Nav */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-            height: var(--nav-h);
-            background: rgba(10, 14, 26, 0.85);
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0;
+            width: var(--sidebar-w); z-index: 200;
+            background: rgba(10, 14, 26, 0.96);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--border);
-            transition: border-color 0.3s;
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            overflow: hidden;
         }
-        .nav-inner {
-            max-width: 1400px; margin: 0 auto; padding: 0 32px;
-            display: flex; align-items: center; justify-content: space-between; height: 100%;
+        .sidebar-header {
+            padding: 20px 20px 16px; border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
-        .nav-brand { font-weight: 700; font-size: 0.9rem; color: var(--text-secondary); letter-spacing: -0.02em; }
-        .nav-brand span { color: var(--accent); }
-        .nav-center { display: flex; gap: 4px; align-items: center; }
-        .nav-link {
-            padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 500;
-            color: var(--text-muted); text-decoration: none; transition: all 0.25s; white-space: nowrap;
+        .sidebar-brand {
+            font-weight: 700; font-size: 0.82rem; color: var(--text-secondary);
+            letter-spacing: -0.02em; margin-bottom: 10px;
         }
-        .nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
-        .nav-link.active { color: var(--accent); background: var(--accent-dim); }
-        .nav-event {
+        .sidebar-brand span { color: var(--accent); }
+        .sidebar-event {
             display: flex; align-items: center; gap: 8px;
-            font-size: 0.78rem; font-weight: 600; color: var(--accent);
+            font-size: 0.7rem; font-weight: 600; color: var(--accent);
         }
-        .nav-event::before {
-            content: ''; width: 7px; height: 7px; border-radius: 50%;
-            background: var(--accent); animation: pulse 2s ease-in-out infinite;
+        .sidebar-event::before {
+            content: ''; width: 6px; height: 6px; border-radius: 50%;
+            background: var(--accent); animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--accent-glow); }
             50% { opacity: 0.5; box-shadow: 0 0 0 6px transparent; }
         }
+        .sidebar-scroll {
+            flex: 1; overflow-y: auto; padding: 12px 10px 20px;
+        }
+        .sidebar-scroll::-webkit-scrollbar { width: 3px; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 3px; }
+        .sidebar-group { margin-bottom: 2px; }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 10px;
+            padding: 7px 12px; border-radius: 8px;
+            font-size: 0.78rem; font-weight: 500;
+            color: var(--text-muted); text-decoration: none;
+            transition: all 0.25s; white-space: nowrap;
+        }
+        .sidebar-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+        .sidebar-link.active { color: var(--accent); background: var(--accent-dim); }
+        .sidebar-num {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+            font-weight: 700; color: var(--accent); min-width: 18px;
+            opacity: 0.6;
+        }
+        .sidebar-link.active .sidebar-num { opacity: 1; }
+        .sidebar-sublink {
+            display: flex; align-items: center; gap: 8px;
+            padding: 4px 12px 4px 40px; border-radius: 6px;
+            font-size: 0.7rem; color: var(--text-muted);
+            text-decoration: none; transition: all 0.2s;
+            opacity: 0.55;
+        }
+        .sidebar-sublink::before {
+            content: ''; width: 4px; height: 4px; border-radius: 50%;
+            background: var(--accent-secondary); flex-shrink: 0; opacity: 0.5;
+        }
+        .sidebar-sublink:hover { color: var(--accent-secondary); opacity: 1; background: rgba(59,130,246,0.06); }
+        .sidebar-sublink.active { color: var(--accent-secondary); opacity: 1; }
+
+        /* Mobile top bar */
+        .mobile-topbar {
+            display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            height: var(--nav-h);
+            background: rgba(10, 14, 26, 0.9);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 20px;
+            align-items: center; justify-content: space-between;
+        }
+        .mobile-topbar .nav-brand { font-weight: 700; font-size: 0.85rem; color: var(--text-secondary); }
+        .mobile-topbar .nav-brand span { color: var(--accent); }
         .nav-hamburger {
-            display: none; background: none; border: none; color: var(--text-secondary);
+            background: none; border: none; color: var(--text-secondary);
             cursor: pointer; padding: 8px;
         }
 
         /* Layout */
-        .page { position: relative; z-index: 1; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
-        .container-wide { max-width: 1300px; margin: 0 auto; padding: 0 32px; }
+        .page { position: relative; z-index: 1; margin-left: var(--sidebar-w); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+        .container-wide { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
 
         /* Hero */
         .hero {
             min-height: 100vh; display: flex; align-items: center;
-            padding: calc(var(--nav-h) + 40px) 0 60px;
+            padding: 40px 0 60px;
         }
         .hero-grid {
             display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center; width: 100%;
@@ -492,27 +537,41 @@
         ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--bg-card-hover); }
 
-        /* Mobile nav */
+        /* Mobile nav overlay */
         .mobile-nav {
             display: none; position: fixed; inset: 0; z-index: 199;
-            background: rgba(10, 14, 26, 0.95); backdrop-filter: blur(20px);
-            padding: calc(var(--nav-h) + 24px) 32px 32px;
-            flex-direction: column; gap: 8px; overflow-y: auto;
+            background: rgba(10, 14, 26, 0.96); backdrop-filter: blur(20px);
+            padding: calc(var(--nav-h) + 16px) 20px 32px;
+            flex-direction: column; gap: 4px; overflow-y: auto;
         }
         .mobile-nav.open { display: flex; }
+        .mobile-nav-group { display: flex; flex-direction: column; gap: 2px; }
         .mobile-nav a {
-            padding: 14px 16px; border-radius: 12px; font-size: 0.92rem;
+            padding: 12px 16px; border-radius: 10px; font-size: 0.88rem;
             color: var(--text-secondary); text-decoration: none;
             border: 1px solid var(--border); transition: all 0.2s;
         }
         .mobile-nav a:hover, .mobile-nav a.active {
             color: var(--accent); border-color: var(--border-accent); background: var(--accent-dim);
         }
+        .mobile-nav a.mobile-sublink {
+            padding: 8px 16px 8px 36px; font-size: 0.78rem;
+            color: var(--text-muted); border: none;
+        }
+        .mobile-nav a.mobile-sublink:hover {
+            color: var(--accent-secondary); background: rgba(59,130,246,0.06);
+            border: none;
+        }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .nav-center { display: none; }
-            .nav-hamburger { display: block; }
+        @media (max-width: 1100px) {
+            .sidebar { display: none; }
+            .mobile-topbar { display: flex; }
+            .page { margin-left: 0; }
+            html { scroll-padding-top: calc(var(--nav-h) + 16px); }
+            .hero { padding: calc(var(--nav-h) + 24px) 0 60px; }
+            .container { max-width: 1100px; }
+            .container-wide { max-width: 1300px; }
             .hero-grid { grid-template-columns: 1fr; gap: 40px; }
             .hero-card { max-width: 480px; }
             .two-col { grid-template-columns: 1fr; }
@@ -545,41 +604,110 @@
 <div class="floating-orb orb-2"></div>
 <div class="floating-orb orb-3"></div>
 
-<nav id="navbar">
-    <div class="nav-inner">
-        <div class="nav-brand"><span>TECNASA</span> U Learning Centers</div>
-        <div class="nav-center" id="navLinks">
-            <a href="#contexto" class="nav-link">Contexto</a>
-            <a href="#banca" class="nav-link">Banca</a>
-            <a href="#pagos" class="nav-link">Pagos</a>
-            <a href="#seguros" class="nav-link">Seguros</a>
-            <a href="#fintech" class="nav-link">Fintech</a>
-            <a href="#ciber" class="nav-link">Ciber</a>
-            <a href="#regulacion" class="nav-link">Regulacion</a>
-            <a href="#indicadores" class="nav-link">KPIs</a>
-            <a href="#talento" class="nav-link">TECNASA</a>
-            <a href="#cierre" class="nav-link">Cierre</a>
-            <a href="#fuentes" class="nav-link">Fuentes</a>
-        </div>
-        <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <div class="nav-event"><span>23 Feb 2026</span></div>
+<!-- Sidebar (desktop) -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand"><span>TECNASA</span> U Learning Centers</div>
+        <div class="sidebar-event">23 Feb 2026 &middot; 3:00 PM NIC</div>
     </div>
-</nav>
+    <div class="sidebar-scroll">
+        <div class="sidebar-group">
+            <a href="#contexto" class="sidebar-link"><span class="sidebar-num">01</span>Contexto</a>
+            <a href="#act-contexto" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#banca" class="sidebar-link"><span class="sidebar-num">02</span>Banca Digital</a>
+            <a href="#act-banca" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#pagos" class="sidebar-link"><span class="sidebar-num">03</span>Pagos</a>
+            <a href="#act-pagos" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#seguros" class="sidebar-link"><span class="sidebar-num">04</span>Seguros</a>
+            <a href="#act-seguros" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#fintech" class="sidebar-link"><span class="sidebar-num">05</span>Fintech</a>
+            <a href="#act-fintech" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#ciber" class="sidebar-link"><span class="sidebar-num">06</span>Ciberseguridad</a>
+            <a href="#act-ciber" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#regulacion" class="sidebar-link"><span class="sidebar-num">07</span>Regulacion</a>
+            <a href="#act-regulacion" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#indicadores" class="sidebar-link"><span class="sidebar-num">08</span>Indicadores</a>
+            <a href="#act-indicadores" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#talento" class="sidebar-link"><span class="sidebar-num">09</span>TECNASA U</a>
+            <a href="#act-talento" class="sidebar-sublink">Actividad</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#cierre" class="sidebar-link"><span class="sidebar-num">10</span>Cierre</a>
+        </div>
+        <div class="sidebar-group">
+            <a href="#fuentes" class="sidebar-link"><span class="sidebar-num">11</span>Fuentes</a>
+        </div>
+    </div>
+</aside>
 
+<!-- Mobile top bar -->
+<div class="mobile-topbar" id="mobileTopbar">
+    <div class="nav-brand"><span>TECNASA</span> U</div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+</div>
+
+<!-- Mobile nav overlay -->
 <div class="mobile-nav" id="mobileNav">
-    <a href="#contexto">01 — Contexto</a>
-    <a href="#banca">02 — Banca Digital</a>
-    <a href="#pagos">03 — Pagos</a>
-    <a href="#seguros">04 — Seguros</a>
-    <a href="#fintech">05 — Fintech</a>
-    <a href="#ciber">06 — Ciberseguridad</a>
-    <a href="#regulacion">07 — Regulacion</a>
-    <a href="#indicadores">08 — Indicadores</a>
-    <a href="#talento">09 — TECNASA U</a>
-    <a href="#cierre">10 — Cierre</a>
-    <a href="#fuentes">11 — Fuentes</a>
+    <div class="mobile-nav-group">
+        <a href="#contexto">01 — Contexto</a>
+        <a href="#act-contexto" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#banca">02 — Banca Digital</a>
+        <a href="#act-banca" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#pagos">03 — Pagos</a>
+        <a href="#act-pagos" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#seguros">04 — Seguros</a>
+        <a href="#act-seguros" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#fintech">05 — Fintech</a>
+        <a href="#act-fintech" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#ciber">06 — Ciberseguridad</a>
+        <a href="#act-ciber" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#regulacion">07 — Regulacion</a>
+        <a href="#act-regulacion" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#indicadores">08 — Indicadores</a>
+        <a href="#act-indicadores" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#talento">09 — TECNASA U</a>
+        <a href="#act-talento" class="mobile-sublink">↳ Actividad</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#cierre">10 — Cierre</a>
+    </div>
+    <div class="mobile-nav-group">
+        <a href="#fuentes">11 — Fuentes</a>
+    </div>
 </div>
 
 <div class="page">
@@ -694,7 +822,7 @@
             <div style="margin-top:12px;font-size:0.72rem;color:var(--text-muted);">% de poblacion con cuenta en institucion financiera — BCN</div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-contexto">
             <div class="activity-header"><div class="activity-icon">&#9997;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Diagnostico rapido de tu organizacion</h4>
             <p>Reflexiona sobre estas preguntas y comparte tu respuesta en el chat:</p>
@@ -765,7 +893,7 @@
             <div style="margin-top:12px;font-size:0.72rem;color:var(--text-muted);">% transacciones digitales / penetracion digital reportada</div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-banca">
             <div class="activity-header"><div class="activity-icon">&#128161;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Mapea tu nivel de automatizacion</h4>
             <p>Piensa en los procesos de tu institucion y comparte en el chat:</p>
@@ -802,7 +930,7 @@
             <p>El cierre del cuarto trimestre de 2025 marco un hito en la digitalizacion de pagos: crecimiento del 15.4% en valor y 26.4% en volumen interanual. Esta aceleracion exige supervision algoritmica constante y validaciones de seguridad en tiempo real.</p>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-pagos">
             <div class="activity-header"><div class="activity-icon">&#128337;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Velocidad vs. seguridad</h4>
             <p>Comparte tu experiencia en el chat:</p>
@@ -856,7 +984,7 @@
             </div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-seguros">
             <div class="activity-header"><div class="activity-icon">&#128202;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>¿Reactivo o proactivo?</h4>
             <p>Evalua el nivel de madurez de tu organizacion en gestion de riesgos:</p>
@@ -902,7 +1030,7 @@
             <p>El marco PSP/PSAV 2025 del BCN y la SIBOIF permite el registro formal de plataformas que usan IA para inclusion financiera, con estandares de gobernanza equivalentes a la banca tradicional. Esto es clave para un pais donde el 87.6% de la poblacion carece de cuenta bancaria formal.</p>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-fintech">
             <div class="activity-header"><div class="activity-icon">&#127919;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>El segmento desatendido</h4>
             <p>Identifica oportunidades de inclusion financiera:</p>
@@ -955,7 +1083,7 @@
             </div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-ciber">
             <div class="activity-header"><div class="activity-icon">&#128272;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Auditoria express de ciberresiliencia</h4>
             <p>Responde con SI o NO en el chat para cada pregunta:</p>
@@ -1001,7 +1129,7 @@
             </div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-regulacion">
             <div class="activity-header"><div class="activity-icon">&#9878;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Checklist de cumplimiento</h4>
             <p>Levanta la mano (o escribe en el chat) si tu organizacion ya cumple con:</p>
@@ -1062,7 +1190,7 @@
             <p>Los C$151.6M en deterioro de activos financieros representan la oportunidad mas clara para la IA: mejores modelos de scoring crediticio y cobranza inteligente pueden reducir drasticamente esta cifra. El margen financiero neto de C$473.8M proporciona la capacidad de reinversion en transformacion digital.</p>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-indicadores">
             <div class="activity-header"><div class="activity-icon">&#128200;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>Calcula tu oportunidad</h4>
             <p>Haz un ejercicio rapido con los numeros de tu organizacion:</p>
@@ -1183,7 +1311,7 @@
             </div>
         </div>
 
-        <div class="activity-block reveal">
+        <div class="activity-block reveal" id="act-talento">
             <div class="activity-header"><div class="activity-icon">&#127919;</div><div class="activity-tag">Actividad participativa</div></div>
             <h4>¿Donde esta tu brecha de talento?</h4>
             <p>Responde en el chat — esto nos ayuda a entender las prioridades de la audiencia:</p>
@@ -1356,30 +1484,47 @@ function animateNumber(el) {
     requestAnimationFrame(tick);
 }
 
+// Sidebar active tracking
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
+const activityBlocks = document.querySelectorAll('.activity-block[id]');
+const sidebarLinks = document.querySelectorAll('.sidebar-link');
+const sidebarSublinks = document.querySelectorAll('.sidebar-sublink');
+const allNavTargets = [...sections, ...activityBlocks].sort((a, b) => a.offsetTop - b.offsetTop);
+
 function updateActiveNav() {
-    const scrollY = window.scrollY + 120;
+    const scrollY = window.scrollY + 140;
     let currentId = '';
-    sections.forEach(s => { if (s.offsetTop <= scrollY) currentId = s.id; });
-    navLinks.forEach(link => {
+    allNavTargets.forEach(el => { if (el.offsetTop <= scrollY) currentId = el.id; });
+    sidebarLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+    });
+    sidebarSublinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
     });
 }
 window.addEventListener('scroll', updateActiveNav, { passive: true });
 updateActiveNav();
 
+// Mobile hamburger
 const hamburger = document.getElementById('navHamburger');
 const mobileNav = document.getElementById('mobileNav');
-hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
-mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileNav.classList.remove('open'));
-});
+if (hamburger && mobileNav) {
+    hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+    mobileNav.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => mobileNav.classList.remove('open'));
+    });
+}
 
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').style.borderBottomColor =
-        window.scrollY > 80 ? 'rgba(0, 212, 170, 0.1)' : 'rgba(255,255,255,0.06)';
-}, { passive: true });
+// Smooth scroll for sidebar links
+document.querySelectorAll('.sidebar-link, .sidebar-sublink').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
 </script>
 </body>
 </html>
