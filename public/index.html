@@ -64,8 +64,8 @@
             max-width: 1400px; margin: 0 auto; padding: 0 32px;
             display: flex; align-items: center; justify-content: space-between; height: 100%;
         }
-        .nav-brand { font-weight: 700; font-size: 0.9rem; color: var(--text-primary); letter-spacing: -0.02em; }
-        .nav-brand span { color: var(--accent); }
+        .nav-brand { display: flex; align-items: center; flex-shrink: 0; }
+        .nav-brand img { height: 32px; width: auto; }
         .nav-center { display: flex; gap: 4px; align-items: center; }
         .nav-link {
             padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 500;
@@ -544,7 +544,7 @@
 
 <nav id="navbar">
     <div class="nav-inner">
-        <div class="nav-brand"><span>TECNASA</span> U Learning Centers</div>
+        <div class="nav-brand"><img src="logo-tecnasau.png" alt="TECNASA U Learning Centers"></div>
         <div class="nav-center" id="navLinks">
             <a href="#contexto" class="nav-link">Contexto</a>
             <a href="#banca" class="nav-link">Banca</a>
