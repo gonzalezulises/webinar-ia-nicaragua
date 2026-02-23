@@ -99,44 +99,47 @@
         .hero {
             min-height: 100vh; display: flex; align-items: center;
             padding: calc(var(--nav-h) + 40px) 0 60px;
-            background: linear-gradient(180deg, #FFF9E0 0%, #ffffff 100%);
+            background: var(--accent);
+            color: #ffffff;
         }
         .hero-grid {
             display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center; width: 100%;
         }
         .hero-tag {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 16px; background: rgba(255, 214, 0, 0.15);
-            border: 1px solid rgba(255, 214, 0, 0.3); border-radius: 100px;
-            font-size: 0.78rem; font-weight: 600; color: #b8860b;
+            padding: 6px 16px; background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 100px;
+            font-size: 0.78rem; font-weight: 600; color: #ffffff;
             text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 28px;
             animation: fadeInUp 0.6s ease-out;
         }
+        .hero-tag svg { color: #ffffff; }
         .hero h1 {
             font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 900;
             line-height: 1.08; letter-spacing: -0.035em; margin-bottom: 20px;
             animation: fadeInUp 0.6s ease-out 0.1s both;
         }
         .gradient-text {
-            background: var(--gradient-1); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; background-clip: text;
+            color: var(--accent-tertiary);
+            -webkit-text-fill-color: var(--accent-tertiary);
         }
         .hero-subtitle {
-            font-size: 1.1rem; color: var(--text-secondary); max-width: 560px;
+            font-size: 1.1rem; color: rgba(255, 255, 255, 0.85); max-width: 560px;
             line-height: 1.75; margin-bottom: 36px; animation: fadeInUp 0.6s ease-out 0.2s both;
         }
         .hero-meta {
             display: flex; flex-wrap: wrap; gap: 20px; animation: fadeInUp 0.6s ease-out 0.3s both;
         }
         .hero-meta-item {
-            display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--text-secondary);
+            display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.8);
         }
-        .hero-meta-item svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
-        .hero-meta-item strong { color: var(--text-primary); }
+        .hero-meta-item svg { width: 18px; height: 18px; color: #ffffff; flex-shrink: 0; }
+        .hero-meta-item strong { color: #ffffff; }
         .hero-card {
-            background: var(--bg-card); border: 1px solid var(--border);
+            background: #ffffff; border: none;
             border-radius: 24px; padding: 36px; animation: fadeInUp 0.6s ease-out 0.35s both;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            color: var(--text-primary);
         }
         .hero-card-title {
             font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
@@ -145,7 +148,7 @@
         .hero-toc { display: grid; gap: 10px; }
         .hero-toc-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 10px 14px; border-radius: 12px; border: 1px solid var(--border);
+            padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.06);
             font-size: 0.84rem; color: var(--text-secondary);
             text-decoration: none; transition: all 0.25s; cursor: pointer;
         }
@@ -171,8 +174,8 @@
         .section-label::before { content: ''; width: 28px; height: 2px; background: var(--accent); }
         .section-num {
             font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
-            padding: 2px 8px; background: var(--accent-dim); border-radius: 4px;
-            color: var(--accent); font-weight: 700;
+            padding: 3px 10px; background: var(--accent); border-radius: 4px;
+            color: #ffffff; font-weight: 700;
         }
         .section-title {
             font-size: clamp(1.6rem, 3.5vw, 2.5rem); font-weight: 800;
@@ -334,7 +337,7 @@
 
         /* Callout */
         .callout { padding: 24px 28px; border-radius: 16px; margin: 24px 0; border-left: 3px solid; }
-        .callout.insight { background: rgba(0, 200, 224, 0.06); border-color: var(--accent); }
+        .callout.insight { background: rgba(0, 200, 224, 0.08); border-color: var(--accent); border-left-width: 4px; }
         .callout.warning { background: rgba(255, 152, 0, 0.06); border-color: var(--accent-warn); }
         .callout.danger { background: rgba(244, 67, 54, 0.06); border-color: var(--accent-danger); }
         .callout-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
@@ -356,19 +359,19 @@
 
         /* Marquee */
         .marquee-container {
-            overflow: hidden; padding: 14px 0;
-            border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            background: #f8fafc;
+            overflow: hidden; padding: 18px 0;
+            border: none;
+            background: var(--accent-tertiary);
         }
         .marquee-track {
             display: flex; gap: 48px; animation: marquee 35s linear infinite; white-space: nowrap;
         }
         .marquee-item {
-            font-size: 0.8rem; font-weight: 600; color: var(--text-muted);
+            font-size: 0.8rem; font-weight: 700; color: var(--text-primary);
             text-transform: uppercase; letter-spacing: 0.08em;
             display: flex; align-items: center; gap: 10px; flex-shrink: 0;
         }
-        .marquee-item span { color: var(--accent); font-size: 0.6rem; }
+        .marquee-item span { color: rgba(0,0,0,0.3); font-size: 0.6rem; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Speaker */
@@ -409,14 +412,14 @@
 
         /* Activity blocks */
         .activity-block {
-            background: linear-gradient(135deg, rgba(0, 200, 224, 0.04), rgba(2, 136, 209, 0.06));
-            border: 1px solid rgba(0, 200, 224, 0.2);
+            background: rgba(0, 200, 224, 0.06);
+            border: 2px solid var(--accent);
             border-radius: 20px; padding: 32px; margin-top: 48px;
             position: relative; overflow: hidden;
         }
         .activity-block::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 3px; background: var(--gradient-1);
+            height: 4px; background: var(--accent);
         }
         .activity-header {
             display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
@@ -593,7 +596,7 @@
                 <h1>
                     <span class="gradient-text">Inteligencia Artificial</span><br>
                     en Banca, Finanzas<br>y Seguros
-                    <span style="display:block;color:var(--text-muted);font-weight:500;font-size:0.4em;margin-top:8px;">Nicaragua — Datos reales, casos locales, tendencias 2026</span>
+                    <span style="display:block;color:rgba(255,255,255,0.7);font-weight:500;font-size:0.4em;margin-top:8px;">Nicaragua — Datos reales, casos locales, tendencias 2026</span>
                 </h1>
                 <p class="hero-subtitle">El sistema financiero nicaragüense se encuentra en un punto de inflexión estructural. Esta es la radiografía completa de cómo la IA está transformando la banca, los seguros y las fintech del país.</p>
                 <div class="hero-meta">
